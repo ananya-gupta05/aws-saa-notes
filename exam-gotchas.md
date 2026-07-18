@@ -19,3 +19,9 @@ Running log of specific things I stumble on during practice tests — the kind o
   - **Self-managed nodes** — you provision/patch the EC2 instances yourself, more control but more overhead
   - **Fargate for EKS** — no nodes at all, fully serverless, AWS manages everything including the underlying compute (goes a step further than managed node groups)
 - Exam trap: if the question emphasizes "least operational overhead" + Kubernetes/containers, Fargate is usually more correct than Managed Node Groups. Managed Node Groups is the answer when you still need some control (e.g., custom AMIs, GPU instances) but don't want to handle patching/scaling yourself.
+
+## WAF for DDoS mitigation — Layer 7 only
+- **AWS WAF** can help mitigate DDoS attacks, but only at **Layer 7** (application layer) — e.g. HTTP floods, malicious request patterns, rate-based rules blocking abusive IPs
+- WAF does NOT protect against **Layer 3/4** (network/transport layer) attacks like SYN floods or UDP reflection attacks
+- For Layer 3/4 protection, that's **AWS Shield** (Standard is automatic/free for all customers; Advanced adds more protection + 24/7 DDoS response team + cost protection)
+- Exam trap: if the question is about a volumetric/network-layer DDoS attack, WAF alone is NOT the right answer — you need Shield (often paired with WAF for full-stack protection, since they commonly work together: Shield for L3/L4, WAF for L7)
