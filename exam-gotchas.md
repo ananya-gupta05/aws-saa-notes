@@ -25,3 +25,8 @@ Running log of specific things I stumble on during practice tests — the kind o
 - WAF does NOT protect against **Layer 3/4** (network/transport layer) attacks like SYN floods or UDP reflection attacks
 - For Layer 3/4 protection, that's **AWS Shield** (Standard is automatic/free for all customers; Advanced adds more protection + 24/7 DDoS response team + cost protection)
 - Exam trap: if the question is about a volumetric/network-layer DDoS attack, WAF alone is NOT the right answer — you need Shield (often paired with WAF for full-stack protection, since they commonly work together: Shield for L3/L4, WAF for L7)
+
+## DAX vs ElastiCache for DynamoDB caching
+- **DAX (DynamoDB Accelerator)**: purpose-built caching layer specifically for DynamoDB. Sits in front of DynamoDB, microsecond latency, and is **API-compatible** with DynamoDB — meaning little to no code changes needed to adopt it
+- **ElastiCache** (Redis/Memcached): general-purpose caching, works with any database/data source — but using it in front of DynamoDB requires you to **manually write caching logic** in your application code (check cache → miss → query DynamoDB → write to cache)
+- Exam trap: if the question is specifically about caching for DynamoDB with minimal code change / minimal operational overhead, DAX is the correct answer over ElastiCache. ElastiCache is the better answer when caching needs to sit in front of multiple/non-DynamoDB data sources, or when more caching control/flexibility is needed.
