@@ -38,3 +38,13 @@ Running log of specific things I stumble on during practice tests — the kind o
 - Exam trap: whenever the question describes multiple VPCs (roughly 4-5+) needing selective or full interconnectivity, Transit Gateway is almost always the better/correct answer over a peering mesh — peering is fine for just 2, maybe 3 VPCs, but doesn't scale
 
 
+
+## RDS Proxy ≈ managed PgBouncer
+- **RDS Proxy** = AWS's fully managed connection pooler for RDS/Aurora, conceptually the same role **PgBouncer** plays in front of Postgres (used this hands-on in IntelliDB's cloud layer)
+- Same core benefit: pools/multiplexes DB connections so app doesn't exhaust DB connection limits under high concurrency
+- Goes further than PgBouncer:
+  - Fully managed — no server to run/maintain yourself
+  - Works with MySQL, PostgreSQL, MariaDB, SQL Server (PgBouncer is Postgres-only)
+  - Integrates with IAM auth + Secrets Manager for credentials
+  - Reduces failover time for Aurora/RDS Multi-AZ by keeping connections alive and rerouting, instead of every client needing to reconnect
+- Exam trap: if question mentions Lambda + RDS running out of connections, RDS Proxy is almost always the answer (Lambda's concurrency spikes are the classic case RDS Proxy is built for)
