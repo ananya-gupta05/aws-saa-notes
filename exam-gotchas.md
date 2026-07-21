@@ -72,3 +72,8 @@ Running log of specific things I stumble on during practice tests — the kind o
   - **Server-side encryption (SSE)**: SSE-S3 (AWS-managed keys), SSE-KMS (AWS KMS-managed, gives audit trail via CloudTrail + key rotation control), SSE-C (customer-provided keys, AWS never stores the key)
   - **Client-side encryption**: encrypt data yourself before uploading — AWS never sees the plaintext at all
   - EBS volumes and RDS support encryption at rest via KMS, but note: you cannot encrypt an existing unencrypted EBS volume/RDS instance directly — must snapshot/copy with encryption enabled and swap it in
+
+- **In transit** = data moving between client↔service or service↔service. Protected via:
+  - **TLS/SSL** (HTTPS) for API calls, S3 transfers, RDS connections
+  - **VPN / Direct Connect with encryption** for on-prem ↔ AWS traffic
+  - S3 bucket policies can enforce `aws:SecureTransport` condition to reject any non-HTTPS request
