@@ -78,3 +78,9 @@ Running log of specific things I stumble on during practice tests — the kind o
   - **VPN / Direct Connect with encryption** for on-prem ↔ AWS traffic
   - S3 bucket policies can enforce `aws:SecureTransport` condition to reject any non-HTTPS request
 - Exam trap: SSE-KMS is usually the "best practice" answer over SSE-S3 when the question mentions audit requirements, key rotation control, or "who accessed the encryption key" — SSE-S3 doesn't give that visibility since AWS fully manages the key
+
+## S3 Protection Features (Module 5 follow-up)
+- **Versioning**: keeps multiple variants of an object, protects against accidental overwrite/delete — required before you can enable MFA Delete
+- **MFA Delete**: requires MFA authentication to permanently delete a version or change versioning state, extra layer against accidental/malicious deletion
+- **Object Lock**: WORM (write-once-read-many) model — governance mode (can be overridden by users with special permission) vs compliance mode (cannot be overridden by anyone, even root, until retention expires)
+- **Cross-Region/Same-Region Replication**: automatic async copy of objects to another bucket, useful for compliance/DR, requires versioning enabled on both buckets
