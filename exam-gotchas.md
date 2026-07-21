@@ -55,3 +55,14 @@ Running log of specific things I stumble on during practice tests — the kind o
   - Integrates with IAM auth + Secrets Manager for credentials
   - Reduces failover time for Aurora/RDS Multi-AZ by keeping connections alive and rerouting, instead of every client needing to reconnect
 - Exam trap: if question mentions Lambda + RDS running out of connections, RDS Proxy is almost always the answer (Lambda's concurrency spikes are the classic case RDS Proxy is built for)
+
+## Data Protection: At Rest vs In Transit
+- **At rest** = data sitting in storage (S3, EBS, RDS, DynamoDB). Protected via:
+  - **Server-side encryption (SSE)**: SSE-S3 (AWS-managed keys), SSE-KMS (AWS KMS-managed, gives audit trail via CloudTrail + key rotation control), SSE-C (customer-provided keys, AWS never stores the key)
+  - **Client-side encryption**: encrypt data yourself before uploading — AWS never sees the plaintext at all
+  - EBS volumes and RDS support encryption at rest via KMS, but note: **you cannot encrypt an existing unencrypted EBS volume/RDS instance directly** — must snapshot/copy with encryption enabled and swap it in
+- **In transit** = data moving between client↔service or service↔service. Protected via:
+  - **TLS/SSL** (HTTPS) for API calls, S3 transfers, RDS connections
+  - **VPN / Direct Connect with encryption** for on-prem ↔ AWS traffic
+  - S3 bucket policies can enforce `aws:SecureTransport` condition to reject any non-HTTPS request
+- Exam trap: SSE-KMS is usually the "best practice" answer over SSE-S3 when the question mentions audit requirements, key rotation control, or "who accessed the encryption key" — SSE-S3 doesn't give that visibility since AWS fully manages the key
