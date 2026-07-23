@@ -138,3 +138,9 @@ Running log of specific things I stumble on during practice tests — the kind o
 - **GuardDuty**: continuous threat detection using CloudTrail/VPC Flow Logs/DNS logs — detects anomalous account/network behavior, not the same as Macie's PII focus
 - **Inspector**: automated security assessment for EC2/ECR/Lambda — finds vulnerabilities (CVEs) and unintended network exposure, not a data-classification tool
 - Exam trap: these three get mixed up constantly — Macie = sensitive data discovery, GuardDuty = threat/anomaly detection, Inspector = vulnerability scanning. Different jobs, don't swap them in an answer
+
+## S3 Protection Features (Module 5 follow-up)
+- **Versioning**: keeps multiple variants of an object, protects against accidental overwrite/delete — required before you can enable MFA Delete
+- **MFA Delete**: requires MFA authentication to permanently delete a version or change versioning state, extra layer against accidental/malicious deletion
+- **Object Lock**: WORM (write-once-read-many) model — governance mode (can be overridden by users with special permission) vs compliance mode (cannot be overridden by anyone, even root, until retention expires)
+- **Cross-Region/Same-Region Replication**: automatic async copy of objects to another bucket, useful for compliance/DR, requires versioning enabled on both buckets
